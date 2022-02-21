@@ -1,8 +1,11 @@
 <template>
   <div id="app">
     <section class="todoapp">
-      <Header @insertTodo="insertTodo"/>
-      <Todo :todos="todos"/>
+      <Header @insertTodo="insertTodo" />
+      <Todo :todos="todos"
+       @removeTodo="removeTodo"
+       @updateDone="updateDone"
+       @updateTodo="updateTodo"/>
       <Footer/>
     </section>
   </div>
@@ -48,6 +51,27 @@ export default {
                     isDone: false
                 }
             ]
+        },
+        removeTodo(id) {
+              this.todos = this.todos.filter(todo => todo.id !== id);
+        },
+        updateDone(id){
+          const todos= [...this.todos];
+          const todo = todos.find(todo => todo.id === id);
+
+          if( todo) {
+            todo.isDone = !todo.isDone;
+            this.todos = todos;
+          }
+        },
+        updateTodo({id, text}) {
+          const todos= [...this.todos];
+          const todo = todos.find(todo => todo.id === id);
+
+          if(todo) {
+            todo.text = text;
+            this.todos = todos;
+          }
         }
     }
 }
