@@ -1,8 +1,8 @@
 <template>
     <header class="header">
         <h1>todos</h1>
-        <div>master
-        </div>
+
+        <div>test22</div>
         <input 
         class="new-todo"
         v-model="text"
