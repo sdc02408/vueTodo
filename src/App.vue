@@ -6,7 +6,10 @@
        @removeTodo="removeTodo"
        @updateDone="updateDone"
        @updateTodo="updateTodo"/>
-      <Footer/>
+      <Footer
+       :filterType="filterType"
+        @onFilterType="handleFilterType"
+        :size="filteredList.length"/>
     </section>
   </div>
 </template>
@@ -38,7 +41,8 @@ export default {
           isDone : false
         }
     
-      ]
+      ],
+      filterType: "All"
     }
   },
   methods: {
@@ -72,7 +76,28 @@ export default {
             todo.text = text;
             this.todos = todos;
           }
+        },
+        handleFilterType(type) {
+          this.filterType = type
         }
+    },
+    computed: {
+      filteredList() {
+        switch(this.filterType) {
+          case 'All': {
+            return this.todos
+          }
+          case 'Active': {
+            return this.todos.filter((todo) => !todo.isDone)
+          }
+          case "Completed": {
+            return this.todos.filter((todo) => todo.isDone)
+          }
+          default : {
+            return []
+          }
+        }
+      }
     }
 }
 </script>
